@@ -1,0 +1,48 @@
+﻿@model IEnumerable<SportskaOpremaNemanjaTutunovic.Models.PorudzbinaBO>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Pregled svih porudzbina - Admin panel</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.PorudzbinaID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Cena)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Vreme)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.KorisnikID)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.PorudzbinaID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Cena)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Vreme)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.KorisnikID)
+        </td>
+        <td>
+            @Html.ActionLink("Storniraj", "Delete", new { id = item.PorudzbinaID }, new { @class = "btn btn-danger btn-l active" })
+        </td>
+    </tr>
+}
+
+</table>

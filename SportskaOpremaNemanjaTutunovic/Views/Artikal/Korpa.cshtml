@@ -1,0 +1,57 @@
+﻿@model SportskaOpremaNemanjaTutunovic.Models.ArtikalBO
+
+@{
+    ViewBag.Title = "Korpa";
+    Layout = "~/Views/Shared/_LayoutKorisnik.cshtml";
+}
+
+<h2>Korpa</h2>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+<div>
+    <h4>Odaberite kolicinu izabranog artikla</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <input class="form-control" type="hidden" name="id" value="@Html.DisplayFor(model => model.ArtikalID)"  id="id" />
+        <dt>
+            @Html.DisplayNameFor(model => model.ArtikalID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ArtikalID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NazivArtikla)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NazivArtikla)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cena)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cena)
+        </dd>
+
+        <input class="form-control" type="number" name="kol" value="1" id="kol" />
+
+
+        <div class="form-group">
+
+            <input type="submit" value="Dodaj u korpu" class="btn btn-default" />
+
+        </div>
+
+
+    </dl>
+</div>
+}
+    <p>
+
+        @Html.ActionLink("Back to List", "Index")
+    </p>

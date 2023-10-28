@@ -1,0 +1,42 @@
+﻿@model IEnumerable<SportskaOpremaNemanjaTutunovic.Models.PorudzbinaBO>
+
+@{
+    ViewBag.Title = "IndexKorisnik";
+    Layout = "~/Views/Shared/_LayoutKorisnik.cshtml";
+}
+
+<h2>Vase porudzbine:</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.PorudzbinaID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Cena)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Vreme)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.PorudzbinaID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Cena)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Vreme)
+        </td>
+        <td>
+
+            @Html.ActionLink("Storniraj", "Deletek", new { id = item.PorudzbinaID }, new { @class = "btn btn-danger btn-l active" })
+        </td>
+    </tr>
+}
+
+</table>

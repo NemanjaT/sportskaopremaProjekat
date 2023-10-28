@@ -1,0 +1,201 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ProdavnicaPPPModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Admin">
+    <Key>
+      <PropertyRef Name="Username" />
+    </Key>
+    <Property Name="Username" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Artikal">
+    <Key>
+      <PropertyRef Name="ArtikalID" />
+    </Key>
+    <Property Name="ArtikalID" Type="int" Nullable="false" />
+    <Property Name="NazivArtikla" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Cena" Type="int" Nullable="false" />
+    <Property Name="idKat" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Kategorija">
+    <Key>
+      <PropertyRef Name="idKat" />
+    </Key>
+    <Property Name="idKat" Type="int" Nullable="false" />
+    <Property Name="NazivKategorije" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Korisnik">
+    <Key>
+      <PropertyRef Name="IDKorisnika" />
+    </Key>
+    <Property Name="IDKorisnika" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Mail" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Ime" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Prezime" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Adresa" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="BrTelefona" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Username" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Porudzbina">
+    <Key>
+      <PropertyRef Name="PorudzbinaID" />
+    </Key>
+    <Property Name="PorudzbinaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="cena" Type="int" Nullable="false" />
+    <Property Name="vreme" Type="date" Nullable="false" />
+    <Property Name="IDKorisnika" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="RoleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Naziv" Type="nvarchar" MaxLength="30" />
+  </EntityType>
+  <EntityType Name="StavkaPorudzbine">
+    <Key>
+      <PropertyRef Name="StavkaID" />
+    </Key>
+    <Property Name="StavkaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ArtikalID" Type="int" Nullable="false" />
+    <Property Name="NazivArtikla" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Cena" Type="int" Nullable="false" />
+    <Property Name="PorudzbinaID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="UserRole">
+    <Key>
+      <PropertyRef Name="UserRoleId" />
+    </Key>
+    <Property Name="UserRoleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="int" />
+    <Property Name="RoleId" Type="int" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="30" />
+    <Property Name="Password" Type="nvarchar" MaxLength="30" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="Username" Type="nvarchar" MaxLength="30" />
+  </EntityType>
+  <Association Name="FK_Artikal_Kategorija">
+    <End Role="Kategorija" Type="Self.Kategorija" Multiplicity="1" />
+    <End Role="Artikal" Type="Self.Artikal" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kategorija">
+        <PropertyRef Name="idKat" />
+      </Principal>
+      <Dependent Role="Artikal">
+        <PropertyRef Name="idKat" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Porudzbina_User">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="Porudzbina" Type="Self.Porudzbina" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Porudzbina">
+        <PropertyRef Name="IDKorisnika" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StavkaPorudzbine_Artikal">
+    <End Role="Artikal" Type="Self.Artikal" Multiplicity="1" />
+    <End Role="StavkaPorudzbine" Type="Self.StavkaPorudzbine" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Artikal">
+        <PropertyRef Name="ArtikalID" />
+      </Principal>
+      <Dependent Role="StavkaPorudzbine">
+        <PropertyRef Name="ArtikalID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StavkaPorudzbine_Porudzbina">
+    <End Role="Porudzbina" Type="Self.Porudzbina" Multiplicity="1" />
+    <End Role="StavkaPorudzbine" Type="Self.StavkaPorudzbine" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Porudzbina">
+        <PropertyRef Name="PorudzbinaID" />
+      </Principal>
+      <Dependent Role="StavkaPorudzbine">
+        <PropertyRef Name="PorudzbinaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserRole_Role">
+    <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
+    <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="RoleId" />
+      </Principal>
+      <Dependent Role="UserRole">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserRole_User">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="UserRole">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ProdavnicaPPPModelStoreContainer">
+    <EntitySet Name="Admin" EntityType="Self.Admin" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Artikal" EntityType="Self.Artikal" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Kategorija" EntityType="Self.Kategorija" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Korisnik" EntityType="Self.Korisnik" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Porudzbina" EntityType="Self.Porudzbina" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="StavkaPorudzbine" EntityType="Self.StavkaPorudzbine" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Artikal_Kategorija" Association="Self.FK_Artikal_Kategorija">
+      <End Role="Kategorija" EntitySet="Kategorija" />
+      <End Role="Artikal" EntitySet="Artikal" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Porudzbina_User" Association="Self.FK_Porudzbina_User">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Porudzbina" EntitySet="Porudzbina" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StavkaPorudzbine_Artikal" Association="Self.FK_StavkaPorudzbine_Artikal">
+      <End Role="Artikal" EntitySet="Artikal" />
+      <End Role="StavkaPorudzbine" EntitySet="StavkaPorudzbine" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StavkaPorudzbine_Porudzbina" Association="Self.FK_StavkaPorudzbine_Porudzbina">
+      <End Role="Porudzbina" EntitySet="Porudzbina" />
+      <End Role="StavkaPorudzbine" EntitySet="StavkaPorudzbine" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserRole_Role" Association="Self.FK_UserRole_Role">
+      <End Role="Role" EntitySet="Role" />
+      <End Role="UserRole" EntitySet="UserRole" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserRole_User" Association="Self.FK_UserRole_User">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="UserRole" EntitySet="UserRole" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

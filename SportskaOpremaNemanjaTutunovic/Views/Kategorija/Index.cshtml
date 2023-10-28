@@ -1,0 +1,37 @@
+﻿@model IEnumerable<SportskaOpremaNemanjaTutunovic.Models.KategorijaBO>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Kategorije - Admin Panel</h2>
+
+<p>
+    @Html.ActionLink("Dodaj novu kategoriju", "Create", null, new { @class = "btn btn-primary btn-sm active" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.idKat)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NazivKategorije)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.idKat)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NazivKategorije)
+        </td>
+        <td>
+            @Html.ActionLink("Ukloni", "Delete", new { id = item.idKat }, new { @class = "btn btn-danger btn-l active" })
+        </td>
+    </tr>
+}
+
+</table>

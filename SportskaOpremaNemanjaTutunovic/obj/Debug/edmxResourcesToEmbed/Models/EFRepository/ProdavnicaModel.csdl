@@ -1,0 +1,213 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ProdavnicaPPPModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Admin">
+    <Key>
+      <PropertyRef Name="Username" />
+    </Key>
+    <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Artikal">
+    <Key>
+      <PropertyRef Name="ArtikalID" />
+    </Key>
+    <Property Name="ArtikalID" Type="Int32" Nullable="false" />
+    <Property Name="NazivArtikla" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Cena" Type="Int32" Nullable="false" />
+    <Property Name="idKat" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Kategorija" Relationship="Self.FK_Artikal_Kategorija" FromRole="Artikal" ToRole="Kategorija" />
+    <NavigationProperty Name="StavkaPorudzbine" Relationship="Self.FK_StavkaPorudzbine_Artikal" FromRole="Artikal" ToRole="StavkaPorudzbine" />
+  </EntityType>
+  <EntityType Name="Kategorija">
+    <Key>
+      <PropertyRef Name="idKat" />
+    </Key>
+    <Property Name="idKat" Type="Int32" Nullable="false" />
+    <Property Name="NazivKategorije" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Artikal" Relationship="Self.FK_Artikal_Kategorija" FromRole="Kategorija" ToRole="Artikal" />
+  </EntityType>
+  <EntityType Name="Korisnik">
+    <Key>
+      <PropertyRef Name="IDKorisnika" />
+    </Key>
+    <Property Name="IDKorisnika" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Mail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Ime" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Prezime" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Adresa" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="BrTelefona" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Porudzbina">
+    <Key>
+      <PropertyRef Name="PorudzbinaID" />
+    </Key>
+    <Property Name="PorudzbinaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="cena" Type="Int32" Nullable="false" />
+    <Property Name="vreme" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="IDKorisnika" Nullable="false" Type="Int32" />
+    <NavigationProperty Name="StavkaPorudzbine" Relationship="Self.FK_StavkaPorudzbine_Porudzbina" FromRole="Porudzbina" ToRole="StavkaPorudzbine" />
+    <NavigationProperty Name="User" Relationship="ProdavnicaPPPModel.FK_Porudzbina_User" FromRole="Porudzbina" ToRole="User" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="RoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Naziv" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="UserRole" Relationship="Self.FK_UserRole_Role" FromRole="Role" ToRole="UserRole" />
+  </EntityType>
+  <EntityType Name="StavkaPorudzbine">
+    <Key>
+      <PropertyRef Name="StavkaID" />
+    </Key>
+    <Property Name="StavkaID" Type="Int32" Nullable="false" />
+    <Property Name="ArtikalID" Type="Int32" Nullable="false" />
+    <Property Name="NazivArtikla" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Cena" Type="Int32" Nullable="false" />
+    <Property Name="PorudzbinaID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Artikal" Relationship="Self.FK_StavkaPorudzbine_Artikal" FromRole="StavkaPorudzbine" ToRole="Artikal" />
+    <NavigationProperty Name="Porudzbina" Relationship="Self.FK_StavkaPorudzbine_Porudzbina" FromRole="StavkaPorudzbine" ToRole="Porudzbina" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Email" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="Password" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="Username" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="UserRole" Relationship="Self.FK_UserRole_User" FromRole="User" ToRole="UserRole" />
+    <NavigationProperty Name="Porudzbina" Relationship="ProdavnicaPPPModel.FK_Porudzbina_User" FromRole="User" ToRole="Porudzbina" />
+  </EntityType>
+  <EntityType Name="UserRole">
+    <Key>
+      <PropertyRef Name="UserRoleId" />
+    </Key>
+    <Property Name="UserRoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="Int32" />
+    <Property Name="RoleId" Type="Int32" />
+    <NavigationProperty Name="Role" Relationship="Self.FK_UserRole_Role" FromRole="UserRole" ToRole="Role" />
+    <NavigationProperty Name="User" Relationship="Self.FK_UserRole_User" FromRole="UserRole" ToRole="User" />
+  </EntityType>
+  <Association Name="FK_Artikal_Kategorija">
+    <End Role="Kategorija" Type="Self.Kategorija" Multiplicity="1" />
+    <End Role="Artikal" Type="Self.Artikal" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kategorija">
+        <PropertyRef Name="idKat" />
+      </Principal>
+      <Dependent Role="Artikal">
+        <PropertyRef Name="idKat" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StavkaPorudzbine_Artikal">
+    <End Role="Artikal" Type="Self.Artikal" Multiplicity="1" />
+    <End Role="StavkaPorudzbine" Type="Self.StavkaPorudzbine" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Artikal">
+        <PropertyRef Name="ArtikalID" />
+      </Principal>
+      <Dependent Role="StavkaPorudzbine">
+        <PropertyRef Name="ArtikalID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StavkaPorudzbine_Porudzbina">
+    <End Role="Porudzbina" Type="Self.Porudzbina" Multiplicity="1" />
+    <End Role="StavkaPorudzbine" Type="Self.StavkaPorudzbine" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Porudzbina">
+        <PropertyRef Name="PorudzbinaID" />
+      </Principal>
+      <Dependent Role="StavkaPorudzbine">
+        <PropertyRef Name="PorudzbinaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserRole_Role">
+    <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
+    <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="RoleId" />
+      </Principal>
+      <Dependent Role="UserRole">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserRole_User">
+    <End Role="User" Type="ProdavnicaPPPModel.User" Multiplicity="0..1" />
+    <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="UserRole">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ProdavnicaPPPEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Admin" EntityType="Self.Admin" />
+    <EntitySet Name="Artikal" EntityType="Self.Artikal" />
+    <EntitySet Name="Kategorija" EntityType="Self.Kategorija" />
+    <EntitySet Name="Korisnik" EntityType="Self.Korisnik" />
+    <EntitySet Name="Porudzbina" EntityType="Self.Porudzbina" />
+    <EntitySet Name="Role" EntityType="Self.Role" />
+    <EntitySet Name="StavkaPorudzbine" EntityType="Self.StavkaPorudzbine" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="User" EntityType="ProdavnicaPPPModel.User" />
+    <EntitySet Name="UserRole" EntityType="Self.UserRole" />
+    <AssociationSet Name="FK_Artikal_Kategorija" Association="Self.FK_Artikal_Kategorija">
+      <End Role="Kategorija" EntitySet="Kategorija" />
+      <End Role="Artikal" EntitySet="Artikal" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StavkaPorudzbine_Artikal" Association="Self.FK_StavkaPorudzbine_Artikal">
+      <End Role="Artikal" EntitySet="Artikal" />
+      <End Role="StavkaPorudzbine" EntitySet="StavkaPorudzbine" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StavkaPorudzbine_Porudzbina" Association="Self.FK_StavkaPorudzbine_Porudzbina">
+      <End Role="Porudzbina" EntitySet="Porudzbina" />
+      <End Role="StavkaPorudzbine" EntitySet="StavkaPorudzbine" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserRole_Role" Association="Self.FK_UserRole_Role">
+      <End Role="Role" EntitySet="Role" />
+      <End Role="UserRole" EntitySet="UserRole" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserRole_User" Association="Self.FK_UserRole_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="UserRole" EntitySet="UserRole" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Porudzbina_User" Association="ProdavnicaPPPModel.FK_Porudzbina_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="Porudzbina" EntitySet="Porudzbina" />
+    </AssociationSet>
+  </EntityContainer>
+  <Association Name="FK_Porudzbina_User">
+    <End Type="ProdavnicaPPPModel.User" Role="User" Multiplicity="1" />
+    <End Type="ProdavnicaPPPModel.Porudzbina" Role="Porudzbina" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Porudzbina">
+        <PropertyRef Name="IDKorisnika" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

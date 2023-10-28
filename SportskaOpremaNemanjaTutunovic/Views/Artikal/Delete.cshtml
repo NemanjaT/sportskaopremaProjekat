@@ -1,0 +1,50 @@
+﻿@model SportskaOpremaNemanjaTutunovic.Models.ArtikalBO
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Brisanje</h2>
+
+<h3>Da li ste sigurni da zelite da obrisete ovaj artikal?</h3>
+<div>
+    <h4>Artikal:</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ArtikalID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ArtikalID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NazivArtikla)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NazivArtikla)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cena)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cena)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            @Html.EditorFor(bo => bo.ArtikalID, new { htmlAttributes = new { @class = "hidden" } })
+            <input type="submit" value="Obriši prikazani artikal" class="btn btn-default" /> &nbsp; &nbsp; | &nbsp; &nbsp;
+            <a href="@Url.Action("Index")"><span class="glyphicon glyphicon-arrow-left"></span> Vrati se na pregled artikala</a>
+        </div>
+    }
+</div>

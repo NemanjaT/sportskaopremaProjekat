@@ -1,0 +1,44 @@
+﻿@model IEnumerable<SportskaOpremaNemanjaTutunovic.Models.ArtikalBO>
+
+@{
+    ViewBag.Title = "IndexKorisnik";
+    Layout = "~/Views/Shared/_LayoutKorisnik.cshtml";
+}
+
+<h2>Pregled artikala koji su u ponudi:</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ArtikalID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NazivArtikla)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Cena)
+        </th>
+        <th>Akcije</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ArtikalID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NazivArtikla)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cena)
+            </td>
+            <td>
+                @Html.ActionLink("Dodaj u korpu", "Korpa", new { id = item.ArtikalID }, new { @class = "btn btn-primary btn-l active" })
+                
+            </td>
+        </tr>
+    }
+
+</table>

@@ -1,0 +1,42 @@
+﻿@model SportskaOpremaNemanjaTutunovic.Models.KategorijaBO
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Brisanje kategorije</h2>
+
+<h3>Da li ste sigurni da zelite da obrisete ovu kategoriju?</h3>
+<div>
+    
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.idKat)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.idKat)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NazivKategorije)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NazivKategorije)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            @Html.EditorFor(bo => bo.idKat, new { htmlAttributes = new { @class = "hidden" } })
+            <input type="submit" value="Briši prikazanu kategoriju" class="btn btn-default btn btn-danger btn-l active" /> &nbsp; &nbsp; | &nbsp; &nbsp;
+            <a href="@Url.Action("Index")"><span class="glyphicon glyphicon-arrow-left"></span> Vrati se na listu</a>
+        </div>
+    }
+</div>

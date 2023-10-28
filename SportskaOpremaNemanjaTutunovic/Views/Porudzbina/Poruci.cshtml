@@ -1,0 +1,69 @@
+﻿
+@{
+    ViewBag.Title = "Poruci";
+    Layout = "~/Views/Shared/_LayoutKorisnik.cshtml";
+}
+
+<h2>Potvrda porudzbine</h2>
+@if (TempData["korpa"] != null)
+{
+    <h4>Potvrdite vasu porudzbinu</h4>
+    <table class="table table-responsive">
+
+        <thead>
+            <tr>
+
+                <th>Naziv Artikla</th>
+                <th>Cena</th>
+                <th>Kolicina</th>
+                <th>Ukupna cena</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in TempData["korpa"] as List<SportskaOpremaNemanjaTutunovic.Models.KorpaBO>)
+            {
+
+                <tr>
+
+                    <td>@item.NazivArtikla</td>
+                    <td>@item.Cena</td>
+                    <td>@item.Kolicina</td>
+                    <td>@item.UkupnaCena</td>
+
+                </tr>
+
+            }
+
+        </tbody>
+
+        <tfoot>
+            <tr>
+                <td colspan="4">Ukupan racun:</td>
+                <td>@TempData["racun"]</td>
+
+            </tr>
+        </tfoot>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <input type="hidden" value="@User.Identity.Name" name="korisnik" />
+
+           <div class="form-group">
+        <div class=" col-md-4">
+            <input type="submit" value="Potvrdi porudzbinu" class="btn btn-success btn-l active"/>
+        </div>
+    </div>
+        }
+
+        </table>
+}
+else
+{
+    <h2 style="color:red"> Korpa je prazna...</h2>
+    @Html.ActionLink("Nazad na odabir artikala", "IndexKorisnik", "Artikal")
+}
+
+
+
+
+

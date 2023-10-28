@@ -1,0 +1,55 @@
+﻿
+@{
+    ViewBag.Title = "PregledKorpe";
+    Layout = "~/Views/Shared/_LayoutKorisnik.cshtml";
+}
+
+<h2>Pregled Korpe</h2>
+@if (TempData["korpa"] != null)
+{
+<table class="table table-responsive">
+
+    <thead>
+        <tr>
+
+            <th>Naziv Artikla</th>
+            <th>Cena</th>
+            <th>Kolicina</th>
+            <th>Ukupna cena</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in TempData["korpa"] as List<SportskaOpremaNemanjaTutunovic.Models.KorpaBO>)
+        {
+
+            <tr>
+
+                <td>@item.NazivArtikla</td>
+                <td>@item.Cena</td>
+                <td>@item.Kolicina</td>
+                <td>@item.UkupnaCena</td>
+
+            </tr>
+
+        }
+
+    </tbody>
+
+    <tfoot>
+        <tr>
+            <td colspan="4">Ukupan racun:</td>
+            <td>@TempData["racun"]</td>
+
+        </tr>
+    </tfoot>
+
+    @Html.ActionLink("Poruci", "Poruci", "Porudzbina",  new { @class = "btn btn-warning btn-l active" }, new { @class = "btn btn-success btn-l active" })
+
+</table>
+}
+else
+{
+    <h2 style="color:red"> Korpa je prazna...</h2>
+    @Html.ActionLink("Nazad na odabir artikala", "IndexKorisnik", "Artikal")
+}
+
